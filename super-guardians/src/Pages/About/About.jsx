@@ -1,5 +1,6 @@
 import "./About.css";
 import Header from "../../Components/Header/Header";
+import Footer from "../../Components/Footer/Footer"
 
 function About() {
   return (
@@ -16,7 +17,7 @@ function About() {
 <p>VD & Grundare</p>
 </section>
 
-<footer><img className="footer-img" src="src/assets/graphics-footer.svg" alt="Footer bild"/></footer>
+<Footer />
     </section>
   );
 }
