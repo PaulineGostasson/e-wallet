@@ -1,0 +1,65 @@
+.home{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    &Btn{
+        border: 1px solid black;
+        color: black;
+        background-color: white;
+        border-radius: 5px;
+        width: 100%;
+        padding: 1rem;
+        font-family: 'PT Mono', monospace;
+        font-weight: 700;
+        box-shadow: 5px  5px 5px lightgrey;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+        position: fixed;
+        bottom: 0;
+    }
+    &-title{
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 2.18rem;
+        line-height: 100%;
+    }
+    &-text{
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 15px;
+        text-transform: uppercase;
+        color: rgba(34, 34, 34, 0.6);
+    }
+    &-cardStack{
+        margin-top: 1rem;
+        min-height: 350px ;
+    }
+    &-showCard{
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    &-nocard{
+        font-family: 'Source Sans Pro';
+        font-style: normal;
+        font-weight: 600;
+    }
+}
+@media only screen and (max-width: 300px) {
+    .home-showCard{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: fit-content;
+    }
+    .home-cardStack{
+        margin-left: auto;
+        margin-right: auto;
+    }
+  }
