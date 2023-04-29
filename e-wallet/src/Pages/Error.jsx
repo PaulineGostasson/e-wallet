@@ -6,6 +6,6 @@ function Error() {
         </section>
 
     )
-  }
-  
-  export default Error;
+}
+
+export default Error;

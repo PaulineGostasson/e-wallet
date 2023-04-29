@@ -1,56 +1,60 @@
 const initialState = {
   cards: JSON.parse(localStorage.getItem("cards")) || [],
-  ShowCard: JSON.parse(localStorage.getItem("showCards")) || {},
+  ShowCard: JSON.parse(localStorage.getItem("lastSelectedCard")) || {},
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD-CARD":
-      let everyCard = [...state.cards, action.payload];
+      const everyCard = [...state.cards, action.payload];
       localStorage.setItem("cards", JSON.stringify(everyCard));
       return {
         ...state,
         cards: everyCard,
       };
 
-    case "REMOVE":
-      let myCards = JSON.parse(localStorage.getItem("cards"));
-      let removeMyCard = myCards.findIndex(
-        (card) => card.id === action.payload
-      );
-      const newRemove = [...myCards];
-      newRemove.splice(removeMyCard, 1);
-      localStorage.setItem("cards", JSON.stringify(newRemove));
+    case "RESET-CARDS":
+      localStorage.removeItem("lastSelectedCard");
+      localStorage.removeItem("cards");
+      return {
+        ...initialState,
+      };
 
-      let removeCard = state.cards.findIndex(
-        (card) => card.id === action.payload
+    case "REMOVE": {
+      const updatedCards = state.cards.filter(
+        (card) => card.id !== action.payload
       );
-      const newCard = [...state.cards];
-      newCard.splice(removeCard, 1);
-
+      localStorage.setItem("cards", JSON.stringify(updatedCards));
       return {
         ...state,
-        cards: newCard,
+        cards: updatedCards,
       };
-    case "SHOW-CARD":
-      let showDelete = state.cards.findIndex(
-        (card) => card.id === action.payload.id
+    }
+
+    case "DISPLAY-CARD":
+      const selectedCard = action.payload;
+      const cardStack = state.cards.filter(
+        (card) => card.id !== selectedCard.id
       );
-      localStorage.removeItem("showCards");
+      localStorage.setItem("lastSelectedCard", JSON.stringify(selectedCard));
+      return {
+        ...state,
+        ShowCard: selectedCard,
+        cards: cardStack,
+      };
 
-      if (showDelete > -1) {
-        localStorage.setItem("showCards", JSON.stringify(action.payload));
+    case "PUT-AWAY-CARD":
+      const lastSelectedCard = JSON.parse(
+        localStorage.getItem("lastSelectedCard")
+      );
+      const cards = [...state.cards];
+      const newStack = cards.filter((card) => card.id !== lastSelectedCard.id);
 
-        return {
-          ...state,
-          ShowCard: action.payload,
-        };
-      }
-    case "REMOVE-SHOW-CARD":
-      localStorage.removeItem("showCards");
+      localStorage.removeItem("lastSelectedCard");
       return {
         ...state,
         ShowCard: {},
+        cards: [...newStack, lastSelectedCard],
       };
 
     default:

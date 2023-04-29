@@ -11,58 +11,60 @@ import { addCard } from '../../Actions/Actions'
 import uuid from 'uuid-random'
 
 
-function AddCardForm(){
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-    const id = uuid()
+function AddCardForm() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const id = uuid()
 
 
-    const [vendor, setVendor] = useState(`bitcoin ${ bitcoin } #FFAE34 #FFFFFF ${chip}`);
-    const [cardNumber, setCardNumber] = useState('');
-    const [cardName, setCardHolder] = useState('');
-    const [valid, setValidThru] = useState('');
-    const [cvv, setCVV] = useState('');
+  const [vendor, setVendor] = useState(`bitcoin ${bitcoin} #FFAE34 #FFFFFF ${chip}`);
+  const [cardNumber, setCardNumber] = useState('');
+  const [cardName, setCardHolder] = useState('');
+  const [valid, setValidThru] = useState('');
+  const [cvv, setCVV] = useState('');
 
-    function GoBackButton() {
-        const navigate = useNavigate();
-
-        function handleClick() {
-          navigate('/');
-        }
-
-        return (
-          <button onClick={handleClick}>Go Back</button>
-        );
-      }
-
-    function saveCardInfo() {
-      const splitVendor = vendor.split(' ');
-      if (cardNumber.length < 5 || cardNumber.length > 20) {
-        alert('Fill in the application');
-      } else {
-        const formValue = {
-          id: id,
-          Vendor: splitVendor,
-          cardNumber: cardNumber,
-          cardName: cardName,
-          valid: valid,
-          cvv: cvv
-        };
-        dispatch(addCard(formValue));
-        navigate('/');
-      }
-    };
-  
-    function getValue(event) {
-      setVendor(event.target.value)
-    };
-  
-    function getInputNumber(event) {
-      setCardNumber(event.target.value) 
+  function saveCardInfo() {
+    console.log('test')
+    const splitVendor = vendor.split(' ');
+    if (cardNumber.length < 5 || cardNumber.length > 20) {
+      alert('You need atleast 5 numbers on your card');
+    } else {
+      const formValue = {
+        id: id,
+        Vendor: splitVendor,
+        cardNumber: cardNumber,
+        cardName: cardName,
+        valid: valid,
+        cvv: cvv
+      };
+      console.log(formValue)
+      dispatch(addCard(formValue));
+      navigate('/');
     }
-  
-    return (
-        <div>
+  };
+
+  function getValue(event) {
+    setVendor(event.target.value)
+  };
+
+  function getInputNumber(event) {
+    setCardNumber(event.target.value)
+  }
+
+  function setCard(event) {
+    setCardHolder(event.target.value)
+  }
+
+  function ValidThru(event) {
+    setValidThru(event.target.value)
+  }
+
+  function CVV(event) {
+    setCVV(event.target.value)
+  }
+
+  return (
+    <div>
       <form className='form'>
         <label className='formLabel' htmlFor="">CARD NUMBER</label>
         <input
@@ -71,13 +73,13 @@ function AddCardForm(){
           placeholder="XXXX XXXX XXXX XXXX"
           onChange={getInputNumber}
         />
-        <label className='form-Label' htmlFor="">CARDHOLDER NAME</label> 
+        <label className='form-Label' htmlFor="">CARDHOLDER NAME</label>
         <input
           className='form-Input'
           type="text"
           required
           placeholder="CARDHOLDER NAME"
-          onChange={(event) => { setCardHolder(event.target.value); }}
+          onChange={setCard}
         />
 
         <article className='formArt'>
@@ -88,7 +90,7 @@ function AddCardForm(){
               type="number"
               required
               placeholder='01/23'
-              onChange={(event) => { setValidThru(event.target.value); }}
+              onChange={ValidThru}
             />
           </article>
           <article className='formDateCvv'>
@@ -98,11 +100,11 @@ function AddCardForm(){
               type="number"
               required
               placeholder='123'
-              onChange={(event) => { setCVV(event.target.value); }}
+              onChange={CVV}
             />
           </article>
         </article>
-  
+
         <label className='form-Label' htmlFor="vendors">VENDOR</label>
         <select
           name="vendors"
@@ -117,19 +119,17 @@ function AddCardForm(){
           <option value={`blockchain ${blockChain} #8B58F9 #FFFFFF ${chip}`}>BLOCKCHAIN INC</option>
           <option value={`evil ${evil} #F33355 #FFFFFF ${chip}`}>EVIL CORP</option>
         </select>
-  
         <button
           type='submit'
           className='formBtn'
-          disabled={!cardNumber || !cardName || !valid || !cvv || vendor === 'NoVendor'}
           onClick={saveCardInfo}
         >
           Add Card
         </button>
       </form>
-      <GoBackButton />
-      </div>
-    );
-  }
-  
-  export default AddCardForm;
+    </div>
+
+  );
+}
+
+export default AddCardForm;

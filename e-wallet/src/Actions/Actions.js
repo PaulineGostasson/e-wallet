@@ -1,7 +1,7 @@
-function addCard() {
+function addCard(Card) {
   return {
     type: "ADD-CARD",
-    payload: infoOnCard,
+    payload: Card,
   };
 }
 function remove(Card) {
@@ -16,11 +16,18 @@ function displayCard(Card) {
     payload: Card,
   };
 }
-function putAwayCard(displayCard) {
+function putAwayCard(Card) {
   return {
     type: "PUT-AWAY-CARD",
-    payload: displayCard,
+    payload: Card,
+  };
+}
+function resetCards() {
+  localStorage.removeItem("cards");
+  localStorage.removeItem("lastSelectedCard");
+  return {
+    type: "RESET-CARDS",
   };
 }
 
-export { addCard, remove, displayCard, putAwayCard };
+export { addCard, remove, displayCard, putAwayCard, resetCards };

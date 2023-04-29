@@ -10,9 +10,10 @@ const Card = ({ item }) => {
 
   const decrease = () => {
     if (item?.id) {
-      dispatch(remove(item.id));
+      dispatch(remove(item.id, () => {
+        dispatch(putAwayCard(item?.id));
+      }));
     }
-    dispatch(putAwayCard(item?.id));
   };
 
   const selectedCard = () => {

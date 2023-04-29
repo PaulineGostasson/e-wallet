@@ -3,21 +3,17 @@ import Card from "../Card/Card"
 import './CardStack.scss'
 
 
-function CardStack(){
-    const myCards = useSelector((state) => { return state.cards})
+function CardStack() {
+    const myCards = useSelector((state) => { return state.cards })
 
-    if (!myCards) {
-        return <p>Loading...</p>
-    }
-
-    const cardsEl = myCards.map((item)=>{
-        return <Card item ={item} key={item.id}/>
+    const cardsEl = myCards.map((item) => {
+        return <Card item={item} key={item.id} />
     })
 
-    return(
+    return (
         <section className="cardStack">
             <section className="cardStack-cards" >
-                {cardsEl.length >0 ? cardsEl: <p className="cardStack-empty">Your Wallet is empty.</p>}
+                {cardsEl.length > 0 ? cardsEl : <p className="cardStack-empty">Your Wallet is empty.</p>}
             </section>
         </section>
     )

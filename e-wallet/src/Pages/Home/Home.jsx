@@ -1,34 +1,45 @@
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import CardStack from "../../Components/CardStack/CardStack"
 import Card from "../../Components/Card/Card"
-import'./Home.scss'
+import './Home.scss'
+import { putAwayCard } from "../../Actions/Actions";
+import React from 'react';
 
 
-
-function Home (){
+function Home() {
     const navigate = useNavigate()
+    const showCard = useSelector((state) => state.ShowCard);
+    const dispatch = useDispatch();
 
-    const showCard = useSelector((state) => { return state.ShowCard})
-    console.log(showCard)
-
-
-    function navigateToForm(){
-        navigate('/addCard')
+    function handlePutAway() {
+        dispatch(putAwayCard());
     }
-    return(
+
+    return (
         <section className="home">
             <h1 className="home-title">E-Wallet</h1>
             <h4 className="home-text">Active Card</h4>
             <section className="home-showCard">
-              { showCard && showCard.hasOwnProperty('Vendor')? <Card item={ showCard }/> : <p className="home-noCard">Click on card to show card</p> }
+                {showCard && showCard.hasOwnProperty("Vendor") ? (
+                    <div>
+                        <Card item={showCard} />
+                        <button className="homePutAway" onClick={handlePutAway}>
+                            Put Away
+                        </button>
+                    </div>
+                ) : (
+                    <p className="home-noCard">Click on card to show card</p>
+                )}
             </section>
-            <button className="homeBtn" onClick={ navigateToForm } >ADD A NEW CARD</button>
             <section className="home-cardStack">
-                <CardStack/>
+                <CardStack />
             </section>
+            <button className="homeBtn" onClick={() => navigate("/addCard")}>
+                ADD A NEW CARD
+            </button>
         </section>
-
-    )
+    );
 }
+
 export default Home
